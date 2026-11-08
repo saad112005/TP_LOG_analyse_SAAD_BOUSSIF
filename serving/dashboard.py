@@ -12,6 +12,17 @@ LARGEUR_BARRE = 40      # nombre de # pour la plus grande valeur
 TOP = 10                # nombre de lignes du dashboard "invalid user"
 
 
+def accord(nombre, singulier, pluriel):
+    """
+    in: un nombre + le mot au singulier et au pluriel
+    out: texte accordé, ex : "1 connexion réussie", "4 connexions réussies"
+    (en français, 0 et 1 sont au singulier)
+    """
+    if nombre <= 1:
+        return f'{nombre} {singulier}'
+    return f'{nombre} {pluriel}'
+
+
 def barre(nombre, maximum):
     """
     in: une valeur + la plus grande valeur du tableau
@@ -70,13 +81,14 @@ def show_dashboard(par_pays, reussites, invalid):
     out: rien (affiche les 3 dashboards)
     """
     print_table('1. Échecs par pays', 'Pays', sort_desc(par_pays))
-    print(f'Total : {sum(par_pays.values())} tentatives échouées')
+    print('Total : ' + accord(sum(par_pays.values()), 'tentative échouée', 'tentatives échouées'))
 
     print_table('2. Réussites par utilisateur', 'Utilisateur', sort_desc(reussites))
-    print(f'Total : {sum(reussites.values())} connexions réussies')
+    print('Total : ' + accord(sum(reussites.values()), 'connexion réussie', 'connexions réussies'))
 
     print_table(f'3. Invalid user : total + top {TOP}', 'Utilisateur essayé', sort_desc(invalid, TOP))
-    print(f'Total : {sum(invalid.values())} tentatives "invalid user" avec {len(invalid)} noms différents')
+    print('Total : ' + accord(sum(invalid.values()), 'tentative "invalid user"', 'tentatives "invalid user"')
+          + ' avec ' + accord(len(invalid), 'nom différent', 'noms différents'))
 
 
 if __name__ == "__main__":
