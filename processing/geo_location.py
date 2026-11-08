@@ -13,16 +13,21 @@ aux lancements suivants, l'API n'est plus appelée pour ces ip.
 
 logger = logging.getLogger(__name__)
 
-URL_IPINFO = 'http://ipinfo.io'
+URL_IPINFO = 'https://ipinfo.io'   # https : le token ne circule pas en clair
 TIMEOUT = 5                     # secondes d'attente max pour une réponse de l'API
 CACHE_DIR = 'cache'
 CACHE_FILE = CACHE_DIR + '/geo_cache.json'
 MAX_ERREURS_RESEAU = 10         # erreurs d'affilée (réseau, limite 429...) avant d'arrêter d'appeler l'API
 
+# token ipinfo.io lu dans la variable d'environnement IPINFO_TOKEN (jamais écrit dans le code)
+# sans token : l'API marche quand même, mais avec une limite de requêtes plus basse
+IPINFO_TOKEN = os.environ.get('IPINFO_TOKEN', '').strip()
 
-# fonction du prof (seul ajout : timeout=TIMEOUT)
+
+# fonction du prof (ajouts : token dans l'en-tête si présent, timeout=TIMEOUT)
 def get_location(ip):
-    response= requests.get(URL_IPINFO + "/" + ip+'/json', timeout=TIMEOUT)
+    headers = {'Authorization': 'Bearer ' + IPINFO_TOKEN} if IPINFO_TOKEN else {}
+    response= requests.get(URL_IPINFO + "/" + ip+'/json', headers=headers, timeout=TIMEOUT)
     if response.status_code == 200:
         return response.json()
 
@@ -111,7 +116,8 @@ def get_country(ip, cache):
 
     if not isinstance(location, dict):
         # get_location renvoie None si le code HTTP n'est pas 200 (ex : 429 = trop de requêtes)
-        logger.warning(f'{ip} : ipinfo.io n\'a pas renvoyé de réponse valide (code HTTP différent de 200, ex : 429 = limite de requêtes atteinte)')
+        logger.warning(f'{ip} : ipinfo.io n\'a pas renvoyé de réponse valide (code HTTP différent de 200, ex : 429 = limite de requêtes atteinte, '
+                       f'403 = token IPINFO_TOKEN invalide)')
         return None
     pays = location.get('country')
     if not pays:
@@ -127,6 +133,11 @@ def get_countries(ips):
     out: dictionnaire {ip: pays}
     """
     cache = load_cache()
+    # on indique seulement si un token est utilisé, jamais sa valeur
+    if IPINFO_TOKEN:
+        logger.info('token ipinfo.io trouvé dans IPINFO_TOKEN : il sera utilisé')
+    else:
+        logger.info('pas de variable IPINFO_TOKEN : ipinfo.io est appelé sans token (limite de requêtes plus basse)')
     countries = {}
     nb_api = 0
     erreurs_suivies = 0
