@@ -11,7 +11,8 @@ wheels/
 .venv
 .venv/
 
-# Logs réels du serveur (IP réelles, dépôt public) : seul data/sample.log est versionné
+# Logs réels du serveur (IP réelles, dépôt public) : non versionnés
+# (fichier d'exemple : tests/sample/sample.log)
 data/
 
 # Fichiers de log générés par le programme
