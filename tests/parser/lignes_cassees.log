@@ -1,0 +1,18 @@
+May  5 10:00:01 ns sshd[3000001]: Failed password for root from 192.0.2.10 port 40000 ssh2
+May  5 10:00:06 ns sshd[3000001]: message repeated 3 times: [ Failed password for root from 192.0.2.10 port 40000 ssh2]
+May  5 10:01:00 ns sshd[3000002]: Failed password for invalid user admin from 198.51.100.20 port 40001 ssh2
+May  5 10:02:00 ns sshd[3000003]: Accepted password for etudiant from 10.0.0.5 port 40002 ssh2
+May  5 10:03:00 ns sshd[3000004]: Accepted publickey for prof from 10.0.0.6 port 40003 ssh2: RSA SHA256:exemple
+May  5 10:04:00 ns CRON[3000005]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+May  5 10:05:00 ns sudo: etudiant : TTY=pts/0 ; PWD=/home/etudiant ; USER=root ; COMMAND=/usr/bin/ls
+May  5 10:06:00 ns systemd-logind[612]: New session 7 of user etudiant.
+May  5 10:07:00 ns sshd[3000006]: Connection closed by 203.0.113.30 port 40004 [preauth]
+
+ceci n'est pas une ligne de log
+Mai  5 10:08:00 ns sshd[3000007]: Failed password for root from 192.0.2.11 port 40005 ssh2
+May 45 10:09:00 ns sshd[3000008]: Failed password for root from 192.0.2.12 port 40006 ssh2
+May  5 10:10:00 ns sshd[3000009]: Failed password for root from 999.1.2.3 port 40007 ssh2
+May  5 10:11:00 ns sshd[3000010]: Accepted password for etudiant from 10.0.0.300 port 40008 ssh2
+May  5 10:12:00 ns sshd[3000011]: Failed password for invalid user  from 198.51.100.21 port 40009 ssh2
+May  5 10:13:00 ns sshd[3000012]: Failed password for root from
+May  5 10:14:00 ns sshd[3000013]: Accepted password for etudiant
