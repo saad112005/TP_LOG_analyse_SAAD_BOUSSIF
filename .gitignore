@@ -17,3 +17,6 @@ data/
 
 # Fichiers de log générés par le programme
 logs/
+
+# Cache ip -> pays (contient des IP réelles)
+cache/
