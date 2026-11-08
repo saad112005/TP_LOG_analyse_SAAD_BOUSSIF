@@ -1,0 +1,18 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+*.pyc
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.venv/
+
+# Logs réels du serveur (IP réelles, dépôt public) : seul data/sample.log est versionné
+data/
+
+# Fichiers de log générés par le programme
+logs/
