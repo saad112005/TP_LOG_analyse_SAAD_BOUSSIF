@@ -20,3 +20,6 @@ logs/
 
 # Cache ip -> pays (contient des IP réelles)
 cache/
+
+# Images générées par le dashboard graphique
+output/

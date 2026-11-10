@@ -3,11 +3,12 @@ import sys
 from log_config import setup_logging
 from ingestion import raw
 from processing import extract_transforme, geo_location, statistiques
-from serving import dashboard
+from serving import dashboard, dashboard_graphique
 """
 Pipeline Log Analyzer
 in: dossier des fichiers auth.log (./data par défaut)
-out: 3 dashboards dans la console + messages dans logs/app.log
+out: 3 dashboards dans la console + dashboard graphique (output/dashboard.png)
+     + messages dans logs/app.log
 utilisation : python main.py [dossier]
 """
 
@@ -48,8 +49,9 @@ def run(path):
     reussites = statistiques.success_by_user(events)
     invalid = statistiques.invalid_user_attempts(events)
 
-    # 5. affichage
+    # 5. affichage : d'abord dans la console, puis la figure matplotlib
     dashboard.show_dashboard(par_pays, reussites, invalid)
+    dashboard_graphique.show_dashboard_graphique(par_pays, reussites, invalid)
     logger.info('analyse terminée')
     return 0
 
